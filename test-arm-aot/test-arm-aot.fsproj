@@ -5,6 +5,12 @@
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>TestArmAot</RootNamespace>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <RuntimeIdentifierUP>$(RuntimeIdentifier.Replace("-","_").ToUpper().Insert(0,"RID_"))</RuntimeIdentifierUP>
+    <OSdefine Condition = "$(RuntimeIdentifier.Contains('linux'))">LINUX</OSdefine>
+    <OSdefine Condition = "$(RuntimeIdentifier.Contains('win'))">WINDOWS</OSdefine>
+    <PublishAotDef Condition = "$(PublishAot)">NAOT_ENABLE</PublishAotDef>
+    <PublishAotDef Condition = "!$(PublishAot)">NAOT_DISABLE</PublishAotDef>
+    <DefineConstants>$(RuntimeIdentifierUP);$(OSdefine);$(PublishAotDef)</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
